@@ -1,0 +1,38 @@
+$img-size: 40px;
+$img-url: 'stores.png';
+
+@mixin image-position($position, $size: $img-size) {
+  width: $size;
+  height: $size;
+  background-position: 0 (-$position * $size);
+}
+
+.store {
+  background-image: url($img-url);
+  background-repeat: no-repeat;
+  display: block;
+}
+
+.store-amazon {
+  @include image-position(0);
+}
+
+.store-backcountry {
+  @include image-position(1);
+}
+
+.store-campsaver {
+  @include image-position(2);
+}
+
+.store-levis {
+  @include image-position(3);
+}
+
+.store-moosejaw {
+  @include image-position(4);
+}
+
+.store-rei {
+  @include image-position(5);
+}

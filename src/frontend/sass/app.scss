@@ -1,0 +1,168 @@
+@charset 'UTF-8';
+@import url("http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Arvo:700");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css");
+@import "rotating-card";
+@import "stores.scss";
+
+body, html { overflow-x:hidden; }
+
+body {
+  background-color: #fff;
+  font-family:  'Source Sans Pro';
+  font-size: 12px;
+
+	font-weight: 300;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased; /* Fix for webkit rendering */
+	-webkit-text-size-adjust: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, span, p { font-family: 'Source Sans Pro' }
+
+* {
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+body,
+input,
+textarea,
+select {
+  font-family: 'Source Sans Pro';
+  font-weight: 300;
+  color: #777;
+}
+
+h1 {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #888;
+}
+h2,
+h3,
+h4 {
+  font-weight: 400;
+  color: #888;
+}
+
+h5 {
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #53C5D0;
+  text-align: center;
+}
+
+h6 {
+  font-weight: 400;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  color: #545454;
+  text-align: left;
+}
+
+h1 a,
+h2 a,
+h3 a,
+h4 a,
+h5 a,
+h6 a {
+  color: inherit;
+  text-decoration: none;
+  border: 0;
+}
+
+a {
+  color: #666;
+  text-decoration: none;
+  border-bottom: solid 1px #ddd;
+  -moz-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  -webkit-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  -o-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  -ms-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+}
+
+a strong {
+  -moz-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  -webkit-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  -o-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  -ms-transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+  transition: color 0.25s ease-in-out, border-bottom-color 0.25s ease-in-out;
+}
+
+a:hover {
+  color: #53C5D0;
+  border-bottom-color: rgba(255, 255, 255, 0);
+}
+
+a:hover strong {
+  color: #53C5D0;
+}
+
+hr {
+  border: 0;
+  border-top: solid 1px #ddd;
+}
+
+.page-header {
+  position: relative;
+  //border-bottom: solid 2px #e5e5e5;
+  //box-shadow: inset 0px -8px 0px 0px #fff, inset 0px -10px 0px 0px #e5e5e5;
+  text-align: center;
+  margin: 0;
+  border-bottom: none;
+  h1 {
+    font-family: 'Arvo';
+    font-weight: 700;
+    color: #53C5D0;
+    text-shadow: 0.05em 0.075em 0 rgba(0, 0, 0, 0.1);
+    a {
+      border: 0;
+      text-decoration: none;
+    }
+  }
+  h2 {
+    font-family: 'Arvo';
+    font-weight: 100;
+    font-size: 20px;
+  }
+  p {
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #888;
+  }
+}
+
+
+.footer {
+  border-top: solid 2px #e5e5e5;
+  text-align: center;
+}
+
+.media {
+  padding-left: 10px;
+  margin-top: -10px;
+}
+
+.price {
+  color: #777777;
+  font-size: 14px;
+  font-weight: 300;
+}
+.price-up {
+  color: #B1085B;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.price-down {
+  color: #08B166;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.products {
+  background-color: #E6E6E6;
+  padding-top: 20px;
+}

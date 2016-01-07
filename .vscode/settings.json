@@ -1,0 +1,25 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.tabSize": 2,
+
+  "files.trimTrailingWhitespace": true,
+
+  "javascript.validate.lint.comparisonOperatorsNotStrict": "warning",
+  "javascript.validate.lint.missingSemicolon": "warning",
+  "javascript.validate.lint.mixedTypesArithmetics": "warning",
+  "javascript.validate.lint.parametersDontMatchSignature": "warning",
+  "javascript.validate.lint.undeclaredVariables": "warning",
+  "javascript.validate.lint.redeclaredVariables": "warning",
+  "javascript.validate.syntaxValidation": true,
+
+  "jshint.enable": true,
+  "jshint.options": {
+    "esnext": true,
+    "node": true,
+    "mocha": true,
+    "expr": true,
+    "globals": {
+      "Promise": true
+    }
+  }
+}
