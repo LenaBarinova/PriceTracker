@@ -20,9 +20,9 @@ Todo's List for Frontend:
 
 8. ~~Sort stores by price~~
 
-9. Minify js and css
+9. ~~Minify js and css~~
 
-10. Split external js and css
+10. ~~Split external js and css~~
 
 11. Add price of made purchase and by default do not show already bought products
 
