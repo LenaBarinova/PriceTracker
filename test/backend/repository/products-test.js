@@ -98,7 +98,8 @@ describe('ProductRepository', () => {
 						TableName: 'products',
 						KeyConditionExpression: '#hashkey = :value',
 						ExpressionAttributeNames: { '#hashkey': 'user' },
-						ExpressionAttributeValues: { ':value': USER }
+						ExpressionAttributeValues: { ':value': USER },
+						FilterExpression: 'attribute_not_exists(purchase)'
 					});
 					done();
 				});
@@ -107,7 +108,7 @@ describe('ProductRepository', () => {
 			it('returns correct products', done => {
 				dynamodb.query.callsArgWith(1, null, { Items: [_product] });
 				repository.get(USER).then(products => {
-					expect(products.length).to.equal(1);
+          expect(products.length).to.equal(1);
 					expect(products[0]).to.deep.equal(_product);
 					done();
 				});
@@ -246,7 +247,7 @@ describe('ProductRepository', () => {
 
 			it('returns existing objects', done => {
 				realRepository.get(USER).then(products => {
-					expect(products.length).to.be.at.least(1);
+					expect(products.length).to.equal(1);
 					done();
 				});
 			});

@@ -25,7 +25,7 @@ describe('LevisScraper', () => {
 	describe('integration tests', () => {
 
 		const AMOUNT = 30;
-		const METADATA = { value: "19553001002632" };
+		const METADATA = { value: "19553001002734" };
 
 		describe('getPrice()', () => {
 

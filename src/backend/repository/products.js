@@ -30,7 +30,8 @@ module.exports = {
 					TableName: TABLE_NAME,
 					KeyConditionExpression: '#hashkey = :value',
 					ExpressionAttributeNames: { '#hashkey': 'user' },
-					ExpressionAttributeValues: { ':value': user }
+					ExpressionAttributeValues: { ':value': user },
+					FilterExpression: 'attribute_not_exists(purchase)'
 				};
 				dynamodb.query(queryParams, function (err, data) {
 					if (err) reject(err);

@@ -9,7 +9,7 @@ describe('BackcountryScraper', () => {
 	describe('integration tests', () => {
 
 		const AMOUNT = 300;
-		const URL = 'http://www.backcountry.com/arcteryx-beta-ar-jacket-mens?skid=ARC3653-PHO-M';
+		const URL = 'http://www.backcountry.com/arcteryx-beta-ar-jacket-mens?skid=ARC3653-PHO-L';
 
 		describe('getPrice()', () => {
 
