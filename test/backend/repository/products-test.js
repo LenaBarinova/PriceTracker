@@ -21,6 +21,7 @@ describe('ProductRepository', () => {
 	const USER = 'test';
 	const SLUG = 'arcteryx-beta-ar-jacket-mens-phoenix-medium';
   const ADDED = '2015-10-31T21:24:26+00:00';
+  const SHOW_PURCHASED = true;
 	var _product = {};
 
 	beforeEach(() => {
@@ -105,10 +106,25 @@ describe('ProductRepository', () => {
 				});
 			});
 
+			it('calls dynamodb.query() with correct parameters given user and showPurchased undefined', done => {
+				dynamodb.query.callsArgWith(1, null, { Items: [_product] });
+				repository.get(USER, undefined, undefined).then(products => {
+					var queryParams = dynamodb.query.args[0][0];
+					expect(queryParams).to.deep.equal({
+						TableName: 'products',
+						KeyConditionExpression: '#hashkey = :value',
+						ExpressionAttributeNames: { '#hashkey': 'user' },
+						ExpressionAttributeValues: { ':value': USER },
+						FilterExpression: 'attribute_not_exists(purchase)'
+					});
+					done();
+				});
+			});
+
 			it('returns correct products', done => {
 				dynamodb.query.callsArgWith(1, null, { Items: [_product] });
 				repository.get(USER).then(products => {
-          expect(products.length).to.equal(1);
+					expect(products.length).to.equal(1);
 					expect(products[0]).to.deep.equal(_product);
 					done();
 				});
@@ -145,10 +161,72 @@ describe('ProductRepository', () => {
 				});
 			});
 
+			it('calls dynamodb.get() with correct parameters showPurchased included', done => {
+				dynamodb.get.callsArgWith(1, null, { Item: _product });
+				repository.get(USER, SLUG, SHOW_PURCHASED).then(product => {
+					var getParams = dynamodb.get.args[0][0];
+					expect(getParams).to.deep.equal({
+						TableName: 'products',
+						Key: { user: USER, 'slug': SLUG }
+					});
+					done();
+				});
+			});
+
 			it('returns correct product', done => {
 				dynamodb.get.callsArgWith(1, null, { Item: _product });
 				repository.get(USER, SLUG).then(product => {
 					expect(product).to.deep.equal(_product);
+					done();
+				});
+			});
+
+		});
+
+		describe('get(user, undefined, showPurchased)', () => {
+
+			it('calls dynamodb.query() once', done => {
+				dynamodb.query.callsArgWith(1, null, { Items: [_product] });
+				repository.get(USER, undefined, SHOW_PURCHASED).then(products => {
+					expect(dynamodb.query.calledOnce).to.be.true;
+					done();
+				});
+			});
+
+			it('calls dynamodb.query() with correct parameters when !showPurchased', done => {
+				dynamodb.query.callsArgWith(1, null, { Items: [_product] });
+				repository.get(USER, undefined, !SHOW_PURCHASED).then(products => {
+					var queryParams = dynamodb.query.args[0][0];
+					expect(queryParams).to.deep.equal({
+						TableName: 'products',
+						KeyConditionExpression: '#hashkey = :value',
+						ExpressionAttributeNames: { '#hashkey': 'user' },
+						ExpressionAttributeValues: { ':value': USER },
+						FilterExpression: 'attribute_not_exists(purchase)'
+					});
+					done();
+				});
+			});
+
+			it('calls dynamodb.query() with correct parameters when showPurchased included', done => {
+				dynamodb.query.callsArgWith(1, null, { Items: [_product] });
+				repository.get(USER, undefined, SHOW_PURCHASED).then(products => {
+					var queryParams = dynamodb.query.args[0][0];
+					expect(queryParams).to.deep.equal({
+						TableName: 'products',
+						KeyConditionExpression: '#hashkey = :value',
+						ExpressionAttributeNames: { '#hashkey': 'user' },
+						ExpressionAttributeValues: { ':value': USER }
+					});
+					done();
+				});
+			});
+
+			it('returns correct products', done => {
+				dynamodb.query.callsArgWith(1, null, { Items: [_product] });
+				repository.get(USER, undefined, SHOW_PURCHASED).then(products => {
+					expect(products.length).to.equal(1);
+					expect(products[0]).to.deep.equal(_product);
 					done();
 				});
 			});
@@ -259,6 +337,28 @@ describe('ProductRepository', () => {
 			it('returns existing object', done => {
 				realRepository.get(USER, _product.slug).then(product => {
 					expect(product).to.deep.equal(_product);
+					done();
+				});
+			});
+
+		});
+
+		describe('get(user,undefined,showPurchased)', () => {
+
+			it('returns existing objects', done => {
+				realRepository.get(USER, undefined, SHOW_PURCHASED).then(products => {
+					expect(products.length).to.equal(2);
+					done();
+				});
+			});
+
+		});
+
+		describe('get(user,undefined,!showPurchased)', () => {
+
+			it('returns existing objects', done => {
+				realRepository.get(USER, undefined, !SHOW_PURCHASED).then(products => {
+					expect(products.length).to.equal(1);
 					done();
 				});
 			});

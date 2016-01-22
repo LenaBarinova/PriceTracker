@@ -10,7 +10,7 @@ var dynamodb = new AWS.DynamoDB.DocumentClient({ region: AWS_REGION });
 
 module.exports = {
 
-	get: function (user, slug) {
+	get: function (user, slug, showPurchased) {
 		return new Promise(function (resolve, reject) {
 			if (!user) {
 				return reject(new Error('User should be provided'));
@@ -31,8 +31,10 @@ module.exports = {
 					KeyConditionExpression: '#hashkey = :value',
 					ExpressionAttributeNames: { '#hashkey': 'user' },
 					ExpressionAttributeValues: { ':value': user },
-					FilterExpression: 'attribute_not_exists(purchase)'
 				};
+				if (!showPurchased) {
+					queryParams.FilterExpression = 'attribute_not_exists(purchase)';
+				}
 				dynamodb.query(queryParams, function (err, data) {
 					if (err) reject(err);
 					else resolve(data.Items);
