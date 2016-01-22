@@ -67,8 +67,8 @@ describe('WatcherHandler', () => {
 		scraper.getPrice = sinon.stub();
 		scraper.getPrice.returns(Promise.resolve(LATEST_PRICE));
 
-		repository.get = sinon.stub();
-		repository.get.returns(Promise.resolve([_product]));
+		repository.list = sinon.stub();
+		repository.list.returns(Promise.resolve([_product]));
 
 		repository.save = sinon.stub();
 		repository.save.returns(Promise.resolve(_product));
@@ -109,7 +109,7 @@ describe('WatcherHandler', () => {
 				_product.stores.forEach(s => {
 					s.initialPrice = INITIAL_PRICE;
 				});
-				repository.get.returns(Promise.resolve([_product]));
+				repository.list.returns(Promise.resolve([_product]));
 				repository.save.returns(Promise.resolve(_product));
 
 				handler.on(EVENT).then(products => {
@@ -120,16 +120,16 @@ describe('WatcherHandler', () => {
 				});
 			});
 
-			it('calls repository.get() once', done => {
+			it('calls repository.list() once', done => {
 				handler.on(EVENT).then(products => {
-					expect(repository.get.calledOnce).to.be.true;
+					expect(repository.list.calledOnce).to.be.true;
 					done();
 				});
 			});
 
-			it('calls repository.get() with correct parameters', done => {
+			it('calls repository.list() with correct parameters', done => {
 				handler.on(EVENT).then(products => {
-					var user = repository.get.args[0][0];
+					var user = repository.list.args[0][0];
 					expect(user).to.equal(EVENT.user);
 					done();
 				});
@@ -140,7 +140,7 @@ describe('WatcherHandler', () => {
 					s.initialPrice = INITIAL_PRICE;
 					s.latestPrice = LATEST_PRICE;
 				});
-				repository.get.returns(Promise.resolve([_product]));
+				repository.list.returns(Promise.resolve([_product]));
 				repository.save.returns(Promise.resolve(_product));
 
 				handler.on(EVENT).then(products => {

@@ -10,38 +10,44 @@ var dynamodb = new AWS.DynamoDB.DocumentClient({ region: AWS_REGION });
 
 module.exports = {
 
-	get: function (user, slug, showPurchased) {
+	get: function (user, slug) {
+		return new Promise(function (resolve, reject) {
+			if (!user || !slug) {
+				return reject(new Error('User and slug should be provided'));
+			}
+
+			var getParams = {
+				TableName: TABLE_NAME,
+				Key: { user: user, slug: slug }
+			};
+			dynamodb.get(getParams, function (err, data) {
+				if (err) reject(err);
+				else resolve(data.Item);
+			});
+		});
+	},
+
+  list: function (user, showPurchased) {
 		return new Promise(function (resolve, reject) {
 			if (!user) {
 				return reject(new Error('User should be provided'));
 			}
 
-			if (slug) {
-				var getParams = {
-					TableName: TABLE_NAME,
-					Key: { user: user, slug: slug }
-				};
-				dynamodb.get(getParams, function (err, data) {
-					if (err) reject(err);
-					else resolve(data.Item);
-				});
-			} else {
-				var queryParams = {
-					TableName: TABLE_NAME,
-					KeyConditionExpression: '#hashkey = :value',
-					ExpressionAttributeNames: { '#hashkey': 'user' },
-					ExpressionAttributeValues: { ':value': user },
-				};
-				if (!showPurchased) {
-					queryParams.FilterExpression = 'attribute_not_exists(purchase)';
-				}
-				dynamodb.query(queryParams, function (err, data) {
+			var queryParams = {
+				TableName: TABLE_NAME,
+				KeyConditionExpression: '#hashkey = :value',
+				ExpressionAttributeNames: { '#hashkey': 'user' },
+				ExpressionAttributeValues: { ':value': user },
+			};
+			if (!showPurchased) {
+				queryParams.FilterExpression = 'attribute_not_exists(purchase)';
+			}
+			dynamodb.query(queryParams, function (err, data) {
 					if (err) reject(err);
 					else resolve(data.Items);
 				});
-			}
 		});
-	},
+  },
 
 	save: function (product) {
 		return new Promise(function (resolve, reject) {

@@ -5,7 +5,7 @@ var repository = require('../repository/products');
 module.exports = {
 
 	on: function (event) {
-		return repository.get(event.user, null).then(function (products) {
+		return repository.list(event.user, null).then(function (products) {
 			var productUpdates = [];
 			products.forEach(function (product) {
 				var original = JSON.stringify(product);

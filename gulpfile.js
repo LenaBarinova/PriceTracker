@@ -98,6 +98,7 @@ gulp.task('upload-backend', function () {
   return gulp.src(config.backend.dist_zip)
     .pipe(plug.awslambda('Notifier', { region: 'us-west-2' }))
     .pipe(plug.awslambda('Watcher', { region: 'us-west-2' }))
+    .pipe(plug.awslambda('GetProduct', { region: 'us-west-2' }))
     .pipe(plug.awslambda('GetProducts', { region: 'us-west-2' }))
     .pipe(plug.awslambda('SaveProduct', { region: 'us-west-2' }))
     .pipe(gulp.dest(config.backend.dist_dir));
